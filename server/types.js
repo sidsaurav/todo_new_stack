@@ -1,10 +1,10 @@
 const zod = require('zod')
 
 const addTodoPayload = zod.object({
-    title: zod.string(),
-    description: zod.string()
+  title: zod.string().min(1),
+  description: zod.string().min(1),
 })
 
 module.exports = {
-    addTodoPayload
+  addTodoPayload,
 }
