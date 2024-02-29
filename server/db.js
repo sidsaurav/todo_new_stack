@@ -6,6 +6,6 @@ const schema = mongoose.Schema({
   completed: Boolean,
 })
 
-const User = mongoose.model('User', schema)
+const Task = mongoose.model('Task', schema)
 
-module.exports = { User }
+module.exports = { Task }

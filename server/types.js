@@ -5,6 +5,16 @@ const addTodoPayload = zod.object({
   description: zod.string().min(1),
 })
 
+const updateTodoPayload = zod.object({
+  id: zod.string(),
+})
+
+const deletePayload = zod.object({
+  id: zod.string(),
+})
+
 module.exports = {
   addTodoPayload,
+  updateTodoPayload,
+  deletePayload,
 }
