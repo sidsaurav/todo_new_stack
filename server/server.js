@@ -4,9 +4,11 @@ const { addTodoPayload, updateTodoPayload, deletePayload } = require('./types')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const { Task } = require('./db')
+const cors = require('cors')
 dotenv.config()
 
 app.use(express.json())
+app.use(cors())
 
 const PORT = 5000
 
