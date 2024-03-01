@@ -33,10 +33,12 @@ app.post('/todo', (req, res) => {
     description: parsed.data.description,
     completed: false,
   })
-    .then(() => {
-      return res
-        .status(200)
-        .json({ message: 'task added successfully', task: parsed })
+    .then((task) => {
+      console.log(task)
+      return res.status(200).json({
+        message: 'added',
+        task: { ...task._doc },
+      })
     })
     .catch((err) => {
       return res
@@ -93,5 +95,15 @@ app.delete('/todo', (req, res) => {
       return res
         .status(400)
         .json({ message: 'something went wrong', error: err })
+    })
+})
+
+app.delete('/reset', (req, res) => {
+  Task.deleteMany({})
+    .then(() => {
+      return res.status(200).json({ message: 'reset successfully' })
+    })
+    .catch((err) => {
+      return res.status(400).json({ message: 'something went wrong!' })
     })
 })

@@ -6,7 +6,7 @@ function App() {
     let data = await fetch('http://localhost:5000/todos', {
       method: 'GET',
     })
-    data = data.json()
+    data = await data.json()
     return data
   }
 
@@ -18,9 +18,20 @@ function App() {
         'content-type': 'application/json',
       },
     })
+    setTitle('')
+    setDesc('')
+    let data = await res.json()
     if (res.ok) {
-      setTodo((todo) => {
-        return [...todo, { title: title, description: desc }]
+      setTodo(() => {
+        return [
+          ...todo,
+          {
+            title: data.task.title,
+            description: data.task.description,
+            id: data.task._id,
+            completed: data.task.completed,
+          },
+        ]
       })
     }
   }
@@ -31,7 +42,15 @@ function App() {
 
   useEffect(() => {
     fetchData().then((d) => {
-      setTodo(d)
+      let data = d.map((e) => {
+        return {
+          id: e._id,
+          title: e.title,
+          description: e.description,
+          completed: e.completed,
+        }
+      })
+      setTodo(data)
     })
   }, [])
 
@@ -67,7 +86,7 @@ function App() {
       <button style={{ padding: '4px', width: '300px' }} onClick={postData}>
         Submit
       </button>
-      <Todo data={todo}></Todo>
+      <Todo todo={todo} setTodo={setTodo}></Todo>
     </div>
   )
 }
